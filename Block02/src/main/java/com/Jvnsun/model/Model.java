@@ -1,40 +1,40 @@
 package com.Jvnsun.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Model {
-    public final int RAND_MAX;
-    public int magickNum;
-    public int lower;
-    public int upper;
+    public int RAND_MAX;
+    public int number;
+    public int exclusiveLowerBound;
+    public int exclusiveUpperBound;
+    public List history;
 
     public Model() {
-        this(100);
-    }
-
-    public Model(int rand_max) {
-        this.RAND_MAX = rand_max;
-        this.lower = 0;
-        this.upper = RAND_MAX;
-        this.magickNum = this.rand();
+        this.history = new ArrayList();
     }
 
     public int rand() {
         return rand(0, RAND_MAX);
     }
 
-    public int rand(int min, int max) {
+    public int rand(int inclusiveLowerBound, int inclusiveUpperBound) {
         Random random = new Random();
-        int exclusiveRandRange = max - min + 1;
-        return min + random.nextInt(exclusiveRandRange);
+        int exclusiveRandRange = inclusiveUpperBound - inclusiveLowerBound + 1;
+        return inclusiveLowerBound + random.nextInt(exclusiveRandRange);
     }
 
     public void applyTurn(int turn) {
-        if (magickNum > turn) {
-            lower = turn;
+        if (number > turn) {
+            exclusiveLowerBound = turn;
         }
         else {
-            upper = turn;
+            exclusiveUpperBound = turn;
         }
+    }
+
+    public void appendHistory(Object o) {
+        this.history.add(o);
     }
 }
