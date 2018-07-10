@@ -11,8 +11,9 @@ public class Model {
     public int exclusiveUpperBound;
     public List history;
 
-    public Model() {
+    public Model(int rm) {
         this.history = new ArrayList();
+        this.RAND_MAX = rm;
     }
 
     public int rand() {

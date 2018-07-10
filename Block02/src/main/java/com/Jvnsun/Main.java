@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
-        Model model = new Model();
+        Model model = new Model(100);
         View view = new View();
         ResourceLoader resourceLoader = new ResourceLoader();
         Properties config = resourceLoader.getProperties("config.properties");

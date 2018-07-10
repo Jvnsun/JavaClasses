@@ -2,3 +2,9 @@
 */*.iml
 */.idea
 */target
+*/.classpath
+*/.project
+*/*.eml
+*/*.userlibraries
+*/.settings
+*/bin
