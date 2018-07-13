@@ -8,3 +8,8 @@
 */*.userlibraries
 */.settings
 */bin
+*/build
+*/gradle
+*/settings.gradle
+*/gradlew*
+*/.gradle
