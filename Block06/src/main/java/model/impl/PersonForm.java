@@ -6,7 +6,7 @@ import model.impl.regexp.RegExps;
 
 // TODO Add appliable value explanation for user
 public enum PersonForm implements Field {
-  Name(LatinRegExps.name), Surname(LatinRegExps.surname), Nick(RegExps.nickname), Phone(RegExps.phoneNumber);
+  Name(LatinRegExps.name), Surname(LatinRegExps.surname), NickName(RegExps.nickname), Phone(RegExps.phoneNumber);
 
   private String regExp;
 

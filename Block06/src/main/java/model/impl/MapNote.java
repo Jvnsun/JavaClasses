@@ -8,7 +8,7 @@ import model.api.Field;
 import model.api.Note;
 
 public class MapNote implements Note {
-  private Map<Field, String> map;
+  Map<Field, String> map;
 
   MapNote() {
     this.map = new HashMap<>();

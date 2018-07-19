@@ -6,4 +6,5 @@ public interface Locale {
   String newLine = "\n";
   String request = "Please enter the ";
   String error = "Wrong input";
+  String loginExistsError = "Error! Such login is already present: ";
 }
