@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jvnsun.model.form.Form;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RegistrationController.
@@ -44,22 +46,24 @@ public class RegistrationController extends HttpServlet {
    * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
    * javax.servlet.http.HttpServletResponse)
    */
+  // TODO use getAttribute()
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    ResourceBundle localeBundle = ResourceBundle.getBundle(
+    ResourceBundle localization = ResourceBundle.getBundle(
         this.getServletConfig().getInitParameter("i18nBundle"),
         new Locale(request.getParameter("lang")));
+    Form form = this.buildBlankForm(localization);
     response.setContentType("text/html");
-    request.setAttribute("title", localeBundle.getString("title"));
-    request.setAttribute("firstName", localeBundle.getString("firstName"));
-    request.setAttribute("lastName", localeBundle.getString("lastName"));
-    request.setAttribute("submit", localeBundle.getString("submit"));
-    request.setAttribute("firstNameBg", "white");
-    request.setAttribute("lastNameBg", "white");
-    request.setAttribute("firstNameValue", localeBundle.getString("firstName"));
-    request.setAttribute("lastNameValue", localeBundle.getString("lastName"));
+//    request.setAttribute("title", localization.getString("title"));
+//    request.setAttribute("firstName", localization.getString("firstName"));
+//    request.setAttribute("lastName", localization.getString("lastName"));
+//    request.setAttribute("submit", localization.getString("submit"));
+//    request.setAttribute("firstNameBg", "white");
+//    request.setAttribute("lastNameBg", "white");
+//    request.setAttribute("firstNameValue", localization.getString("firstName"));
+//    request.setAttribute("lastNameValue", localization.getString("lastName"));
     request.getRequestDispatcher("/blank.jsp").forward(request, response);
 
   }
@@ -102,6 +106,20 @@ public class RegistrationController extends HttpServlet {
       response.getWriter().append("Cool!");
     }
 
+  }
+
+  private Form buildBlankForm(ResourceBundle l10n) {
+    Form f = new Form();
+
+    return f;
+//  request.setAttribute("title", localization.getString("title"));
+//  request.setAttribute("firstName", localization.getString("firstName"));
+//  request.setAttribute("lastName", localization.getString("lastName"));
+//  request.setAttribute("submit", localization.getString("submit"));
+//  request.setAttribute("firstNameBg", "white");
+//  request.setAttribute("lastNameBg", "white");
+//  request.setAttribute("firstNameValue", localization.getString("firstName"));
+//  request.setAttribute("lastNameValue", localization.getString("lastName"));
   }
 
 }
