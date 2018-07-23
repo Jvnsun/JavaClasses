@@ -1,11 +1,29 @@
 package com.jvnsun.model.userbase;
 
-import java.util.Observable;
+import com.jvnsun.model.form.Form;
 
-public class UserBase extends Observable {
+/**
+ * Class representing model
+ */
+public final class UserBase {
+  private UserBase() {}
 
-  public UserBase() {
-    // TODO Auto-generated constructor stub
+  /**
+   * Check if login is available and if it doesn't - modify corresponding field
+   * in the form
+   * 
+   * @param f the form
+   * @return true, if login is already used
+   */
+  public static boolean checkAndProcess(Form f) {
+    String login = f.getField("loginValue");
+    if (PredefinedLogins.logins.contains(login)) {
+      f.setField("loginValue", "ALREADY USED");
+      f.setField("loginBg", "red");
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

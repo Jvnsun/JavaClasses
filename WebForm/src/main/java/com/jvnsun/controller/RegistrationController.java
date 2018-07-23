@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jvnsun.model.form.Form;
+import com.jvnsun.model.userbase.UserBase;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -39,14 +40,6 @@ public class RegistrationController extends HttpServlet {
         Locale.getDefault());
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see
-   * javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-   * javax.servlet.http.HttpServletResponse)
-   */
-  // TODO use getAttribute()
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
@@ -61,12 +54,6 @@ public class RegistrationController extends HttpServlet {
     request.getRequestDispatcher("/blank.jsp").forward(request, response);
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.
-   * HttpServletRequest, javax.servlet.http.HttpServletResponse)
-   */
   @Override
   protected void doPost(HttpServletRequest request,
       HttpServletResponse response) throws ServletException, IOException {
@@ -84,6 +71,10 @@ public class RegistrationController extends HttpServlet {
         form.setField(field + "Bg", "red");
       }
     }
+    if (!invalidInput) {
+      invalidInput = UserBase.checkAndProcess(form);
+    }
+
     request.setAttribute("form", form);
     response.setContentType("text/html");
     if (invalidInput) {
