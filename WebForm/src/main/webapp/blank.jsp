@@ -4,24 +4,28 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${form.title}</title>
+<title>${form.getField('title')}</title>
 </head>
 <body>
   <form action="Registration.do" method="post">
-    <label>${form.login}</label>
-    <input type="text" name="01login" value="${form.loginValue}"
-      onfocus="this.value=''" style="background-color: ${form.loginBg}">
-    <br> <label>${form.firstName}</label>
-    <input type="text" name="02firstName" value="${form.firstNameValue}"
-      onfocus="this.value=''" style="background-color: ${form.firstNameBg}">
-    <br> <label>${form.lastName}</label>
-    <input type="text" name="03lastName" value="${form.lastNameValue}"
-      onfocus="this.value=''" style="background-color: ${form.lastNameBg}">
-    <br> <label>${form.phone}</label>
-    <input type="text" name="04phone" value="${form.phoneValue}"
-      onfocus="this.value=''" style="background-color: ${form.phoneBg}">
+    <label>${form.getField("login")}</label>
+    <input type="text" name="login" value="${form.getField('loginValue')}"
+      onfocus="this.value=''"
+      style="background-color: ${form.getField('loginBg')}">
+    <br> <label>${form.getField('firstName')}</label>
+    <input type="text" name="firstName"
+      value="${form.getField('firstNameValue')}" onfocus="this.value=''"
+      style="background-color: ${form.getField('firstNameBg')}">
+    <br> <label>${form.getField('lastName')}</label>
+    <input type="text" name="lastName" value="${form.getField('lastNameValue')}"
+      onfocus="this.value=''"
+      style="background-color: ${form.getField('lastNameBg')}">
+    <br> <label>${form.getField('phone')}</label>
+    <input type="text" name="phone" value="${form.getField('phoneValue')}"
+      onfocus="this.value=''"
+      style="background-color: ${form.getField('phoneBg')}">
     <br>
-    <input type="submit" value="${form.submit}">
+    <input type="submit" value="${form.getField('submit')}">
   </form>
 </body>
 

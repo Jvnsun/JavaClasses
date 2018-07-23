@@ -23,21 +23,21 @@ import com.jvnsun.model.form.Form;
     urlPatterns = {
         "/Registration.do"
     }, initParams = {
-        @WebInitParam(name = "i18nBundle", value = "i18nBundle")
+        @WebInitParam(name = "localeBundle", value = "i18nBundle")
     }
 )
 public class RegistrationController extends HttpServlet {
 
   /** The Constant serialVersionUID. */
   private static final long serialVersionUID = -6371411476542370462L;
+  private static ResourceBundle l10n;
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
-   */
   @Override
-  public void init(ServletConfig config) throws ServletException {}
+  public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    l10n = ResourceBundle.getBundle(config.getInitParameter("localeBundle"),
+        Locale.getDefault());
+  }
 
   /*
    * (non-Javadoc)
@@ -51,21 +51,14 @@ public class RegistrationController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    ResourceBundle localization = ResourceBundle.getBundle(
-        this.getServletConfig().getInitParameter("i18nBundle"),
+    l10n = ResourceBundle.getBundle(
+        this.getServletConfig().getInitParameter("localeBundle"),
         new Locale(request.getParameter("lang")));
-    Form form = this.buildBlankForm(localization);
-    response.setContentType("text/html");
-//    request.setAttribute("title", localization.getString("title"));
-//    request.setAttribute("firstName", localization.getString("firstName"));
-//    request.setAttribute("lastName", localization.getString("lastName"));
-//    request.setAttribute("submit", localization.getString("submit"));
-//    request.setAttribute("firstNameBg", "white");
-//    request.setAttribute("lastNameBg", "white");
-//    request.setAttribute("firstNameValue", localization.getString("firstName"));
-//    request.setAttribute("lastNameValue", localization.getString("lastName"));
-    request.getRequestDispatcher("/blank.jsp").forward(request, response);
 
+    Form form = new Form(l10n);
+    request.setAttribute("form", form);
+    response.setContentType("text/html");
+    request.getRequestDispatcher("/blank.jsp").forward(request, response);
   }
 
   /*
@@ -77,49 +70,27 @@ public class RegistrationController extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request,
       HttpServletResponse response) throws ServletException, IOException {
-    ResourceBundle localeBundle = ResourceBundle.getBundle(
-        this.getServletConfig().getInitParameter("i18nBundle"),
-        new Locale(request.getParameter("lang")));
+    Form form = new Form(l10n);
     boolean invalidInput = false;
     for (Enumeration<String> fields = request.getParameterNames(); fields
         .hasMoreElements();) {
       String field = fields.nextElement();
       if (request.getParameter(field)
-          .matches(localeBundle.getString(field + "Value"))) {
-        request.setAttribute(field + "Value", request.getParameter(field));
-        request.setAttribute(field + "Bg", "white");
+          .matches(l10n.getString(field + "Regexp"))) {
+        form.setField(field + "Value", request.getParameter(field));
+        form.setField(field + "Bg", "white");
       } else {
         invalidInput = true;
-        request.setAttribute(field + "Value", "INVALID");
-        request.setAttribute(field + "Bg", "red");
+        form.setField(field + "Bg", "red");
       }
     }
+    request.setAttribute("form", form);
+    response.setContentType("text/html");
     if (invalidInput) {
-      response.setContentType("text/html");
-      request.setAttribute("title", localeBundle.getString("title"));
-      request.setAttribute("firstName", localeBundle.getString("firstName"));
-      request.setAttribute("lastName", localeBundle.getString("lastName"));
-      request.setAttribute("submit", localeBundle.getString("submit"));
-      request.setAttribute("inputBgColor", "red");
       request.getRequestDispatcher("/blank.jsp").forward(request, response);
     } else {
-      response.getWriter().append("Cool!");
+      request.getRequestDispatcher("/report.jsp").forward(request, response);
     }
 
   }
-
-  private Form buildBlankForm(ResourceBundle l10n) {
-    Form f = new Form();
-
-    return f;
-//  request.setAttribute("title", localization.getString("title"));
-//  request.setAttribute("firstName", localization.getString("firstName"));
-//  request.setAttribute("lastName", localization.getString("lastName"));
-//  request.setAttribute("submit", localization.getString("submit"));
-//  request.setAttribute("firstNameBg", "white");
-//  request.setAttribute("lastNameBg", "white");
-//  request.setAttribute("firstNameValue", localization.getString("firstName"));
-//  request.setAttribute("lastNameValue", localization.getString("lastName"));
-  }
-
 }
