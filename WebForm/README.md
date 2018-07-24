@@ -1,2 +1,2 @@
 #### TODO:
-- beautify jsp with css
+- little refactoring

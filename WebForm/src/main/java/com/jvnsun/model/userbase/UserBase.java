@@ -19,7 +19,7 @@ public final class UserBase {
     String login = f.getField("loginValue");
     if (PredefinedLogins.logins.contains(login)) {
       f.setField("loginValue", "ALREADY USED");
-      f.setField("loginBg", "red");
+      f.setField("loginBg", "yellow");
       return true;
     } else {
       return false;
