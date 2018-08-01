@@ -1,0 +1,5 @@
+package model.entity.gem;
+
+public enum Clarity {
+  O, Tl, Tp, I1, SI, VS, VVS, IF
+}

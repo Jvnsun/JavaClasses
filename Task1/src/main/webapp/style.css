@@ -1,0 +1,7 @@
+@charset "UTF-8";
+.item {
+	border-bottom-style: solid;
+	border-bottom-width: 5px;
+	border-right-width: 5px;
+	 border-right-style: solid;
+}
