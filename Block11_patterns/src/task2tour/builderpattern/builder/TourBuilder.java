@@ -1,19 +1,19 @@
 package task2tour.builderpattern.builder;
 
-import java.time.LocalDate;
-
+import task2tour.builderpattern.product.Tour;
 import task2tour.builderpattern.product.Way;
 
 public interface TourBuilder {
-  void buildTour(LocalDate from, LocalDate to, Integer nPeople);
 
-  void buildTourLocation(String location);
+  TourBuilder buildTourLocation(String location);
 
-  void buildAirportTransfer(Way way);
+  TourBuilder buildFlightTransfer(Way way);
 
-  void buildFlightTransfer(Way way);
+  TourBuilder buildAirportTransfer(Way way);
 
-  void buildDwellingRent();
+  TourBuilder buildDwellingRent();
 
-  void buildInsurance();
+  TourBuilder buildInsurance();
+
+  Tour build();
 }

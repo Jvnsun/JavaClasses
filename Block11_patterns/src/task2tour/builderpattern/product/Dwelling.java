@@ -1,12 +1,10 @@
 package task2tour.builderpattern.product;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 public interface Dwelling {
 
-  BigInteger getPrice();
+  Long getNumberOfNights();
 
-  Integer getNumberOfNights();
-
-  Integer getNumberOfPeople();
+  BigDecimal getPrice();
 }

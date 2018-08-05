@@ -1,6 +1,5 @@
-package task1human;
+package task1human.compositepattern;
 
-import task1human.compositepattern.Setting;
 import task1human.compositepattern.composite.Human;
 
 public class Task1Main {

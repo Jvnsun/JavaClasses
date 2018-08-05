@@ -4,16 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalTime;
 
 public interface Transfer {
+  Way getWay();
 
   LocalTime getDuration();
 
-  Double getDistance();
-
   BigDecimal getPrice();
-
-  Way getWay();
-
-  @Override
-  String toString();
 
 }

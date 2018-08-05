@@ -1,24 +1,25 @@
 package task2tour.builderpattern.product;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface Tour {
-
-  String getLocation();
 
   LocalDate getStartDate();
 
   LocalDate getEndDate();
 
-  BigInteger getPrice();
-
-  Transfer getAirportTransfer();
+  String getLocation();
 
   Transfer getFlight();
 
   Dwelling getDwelling();
 
-  Insurance getInsurance();
+  Optional<Transfer> getAirportTransfer();
+
+  Optional<Insurance> getInsurance();
+
+  BigDecimal getPrice();
 
 }
