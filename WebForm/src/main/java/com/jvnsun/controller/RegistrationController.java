@@ -1,11 +1,9 @@
 package com.jvnsun.controller;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jvnsun.model.dao.DAOFactory;
 import com.jvnsun.model.form.Form;
-import com.jvnsun.model.userbase.UserBase;
+import com.jvnsun.model.form.FormDAO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -22,65 +21,61 @@ import com.jvnsun.model.userbase.UserBase;
  */
 @WebServlet(
     urlPatterns = {
-        "/Registration.do"
+        "/Form"
     }, initParams = {
         @WebInitParam(name = "localeBundle", value = "i18nBundle")
     }
 )
 public class RegistrationController extends HttpServlet {
-
-  /** The Constant serialVersionUID. */
-  private static final long serialVersionUID = -6371411476542370462L;
-  private static ResourceBundle l10n;
-
-  @Override
-  public void init(ServletConfig config) throws ServletException {
-    super.init(config);
-    l10n = ResourceBundle.getBundle(config.getInitParameter("localeBundle"),
-        Locale.getDefault());
-  }
-
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    l10n = ResourceBundle.getBundle(
-        this.getServletConfig().getInitParameter("localeBundle"),
-        new Locale(request.getParameter("lang")));
+    request.getSession().setAttribute("l10n",
+        ResourceBundle.getBundle(
+            this.getServletConfig().getInitParameter("localeBundle"),
+            new Locale(request.getParameter("lang"))));
 
-    Form form = new Form(l10n);
-    request.setAttribute("form", form);
     response.setContentType("text/html");
     request.getRequestDispatcher("/blank.jsp").forward(request, response);
+
   }
 
   @Override
   protected void doPost(HttpServletRequest request,
       HttpServletResponse response) throws ServletException, IOException {
-    Form form = new Form(l10n);
+    ResourceBundle l10n = (ResourceBundle) request.getSession()
+        .getAttribute("l10n");
     boolean invalidInput = false;
-    for (Enumeration<String> fields = request.getParameterNames(); fields
-        .hasMoreElements();) {
-      String field = fields.nextElement();
-      if (request.getParameter(field)
-          .matches(l10n.getString(field + "Regexp"))) {
-        form.setField(field + "Value", request.getParameter(field));
-        form.setField(field + "Bg", "white");
-      } else {
-        invalidInput = true;
-        form.setField(field + "Bg", "red");
-      }
+    String login = request.getParameter("login");
+    if (!login.matches(l10n.getString("loginRegexp"))) {
+      invalidInput = true;
     }
-    if (!invalidInput) {
-      invalidInput = UserBase.checkAndProcess(form);
+    try {
+      
+    }
+    String fName = request.getParameter("firstName");
+    if (!fName.matches(l10n.getString("firstNameRegexp"))) {
+      invalidInput = true;
+    }
+    String lName = request.getParameter("lastName");
+    if (!lName.matches(l10n.getString("lastNameRegexp"))) {
+      invalidInput = true;
+    }
+    String phone = request.getParameter("phone");
+    if (!phone.matches(l10n.getString("phoneRegexp"))) {
+      invalidInput = true;
     }
 
-    request.setAttribute("form", form);
     response.setContentType("text/html");
     if (invalidInput) {
+
       request.getRequestDispatcher("/blank.jsp").forward(request, response);
     } else {
-      request.getRequestDispatcher("/report.jsp").forward(request, response);
+      Form form = new Form(login, fName, lName, phone);
+      FormDAO dao = DAOFactory.getInstance().formDAO();
+      dao.create(form);
+      response.getWriter().println("Form added to db");
     }
 
   }

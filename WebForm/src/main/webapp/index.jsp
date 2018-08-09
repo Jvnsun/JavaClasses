@@ -6,7 +6,7 @@
 <title>Jvnsun Web Form</title>
 </head>
 <body>
-  <form action="Registration.do" method="get">
+  <form action="Form" method="get">
     <input type="submit" name="lang" value="en">
     <input type="submit" name="lang" value="ru">
   </form>

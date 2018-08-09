@@ -1,42 +1,66 @@
 package com.jvnsun.model.form;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
-
 public class Form {
-  private Map<String, String> fields;
+  private long id;
+  private String login;
+  private String firstName;
+  private String lastName;
+  private String phone;
 
-  public Form() {
-    this.fields = new HashMap<>();
+  public Form(String login, String firstName, String lastName, String phone) {
+    // TODO check login
+    this.login = login;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.phone = phone;
   }
 
-  public Form(Map<String, String[]> m) {
-    this();
-    m.forEach((k, v) -> {
-      this.fields.put(k, v[0]);
-    });
+  public Form(Long id, String login, String firstName, String lastName,
+      String phone) {
+    this.id = id;
+    this.login = login;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.phone = phone;
   }
 
-  public Form(ResourceBundle localization) {
-    this();
-    PropertyResourceBundle l10nProps = (PropertyResourceBundle) localization;
-    for (Enumeration<String> keys = l10nProps.getKeys(); keys
-        .hasMoreElements();) {
-      String key = keys.nextElement();
-      String value = l10nProps.getString(key);
-      this.fields.put(key, value);
-    }
+  public long getId() {
+    return id;
   }
 
-  public String getField(String k) {
-    return this.fields.get(k);
+  public void setId(long id) {
+    this.id = id;
   }
 
-  public void setField(String k, String v) {
-    this.fields.put(k, v);
+  public String getLogin() {
+    return login;
   }
 
+  public void setLogin(String login) {
+    this.login = login;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
+  }
+
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
 }
